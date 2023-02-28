@@ -3,11 +3,22 @@ package main
 import (
 	"hmcalister/DoublePendulum/pendulum"
 	"log"
-	"math"
+	"net/http"
 	"os"
 )
 
-const TIME_DELTA = 0.01
+func serveWebFrontend(pendulumState *pendulum.PendulumState) {
+	fs := http.FileServer(http.Dir("./web"))
+	http.Handle("/", fs)
+	http.HandleFunc("/nextState", pendulumState.SendNextStateJSON)
+	http.HandleFunc("/random", pendulumState.Randomize)
+	log.Println("Serving web frontend on port http://127.0.0.1:8080")
+	err := http.ListenAndServe(":8080", nil)
+
+	if err != nil {
+		log.Fatalf("ERROR: Failed to serve front end! %#v\n", err)
+	}
+}
 
 func main() {
 	log.New(os.Stdout, "", log.Ldate|log.Ltime|log.Lshortfile)
@@ -15,13 +26,5 @@ func main() {
 	initialState := pendulum.NewRandomState()
 	log.Printf("Initial Pendulum State: %#v\n", initialState)
 
-	var pendulumState *pendulum.PendulumState
-	pendulumState = initialState
-	for {
-		pendulumState = pendulumState.NextState(TIME_DELTA)
-		log.Printf("%#v\n", pendulumState)
-		if math.IsNaN(pendulumState.Theta1) {
-			break
-		}
-	}
+	serveWebFrontend(initialState)
 }
