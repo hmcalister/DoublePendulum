@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Double Pendulum</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="picocss.min.css">
+</head>
+
+<body>
+    <main class="container">
+        <h1>Double Pendulum</h1>
+        <canvas id="canvas"></canvas>
+        <div class="container" style="margin: 5px 0;">
+            <a href="#" role="button" id="isPausedButton" onclick="togglePaused()">▶️</a>
+            <a href="#" role="button" id="nextFrameButton" onclick="nextFrame()">Next State</a>
+            <a href="#" role="button" id="randStateButton" onclick="randomize()">Randomize State</a>
+        </div>
+    </main>
+    <script src="index.js"></script>
+</body>
+
+</html>
