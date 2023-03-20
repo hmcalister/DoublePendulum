@@ -10,8 +10,10 @@ import (
 func serveWebFrontend(pendulumState *pendulum.PendulumState) {
 	fs := http.FileServer(http.Dir("./web"))
 	http.Handle("/", fs)
+	http.HandleFunc("/getState", pendulumState.GetState)
 	http.HandleFunc("/nextState", pendulumState.SendNextStateJSON)
 	http.HandleFunc("/random", pendulumState.Randomize)
+	http.HandleFunc("/setState", pendulumState.SetState)
 	log.Println("Serving web frontend on port http://127.0.0.1:8080")
 	err := http.ListenAndServe(":8080", nil)
 
