@@ -27,3 +27,38 @@ async function randomize() {
     draw();
 }
 
+async function ifPausedSetState(event) {
+    if (isPaused) {
+        setStateForm(event);
+    }
+}
+
+async function setStateForm(event) {
+    event.preventDefault();
+
+    const postData = {
+        upperLength: document.getElementById("upperLength").value/100.0,
+        upperMass: document.getElementById("upperMass").value/100.0,
+        upperAngle: document.getElementById("upperAngle").value/100.0,
+        upperAngularVelocity: document.getElementById("upperAngularVelocity").value/100.0,
+        lowerLength: document.getElementById("lowerLength").value/100.0,
+        lowerMass: document.getElementById("lowerMass").value/100.0,
+        lowerAngle: document.getElementById("lowerAngle").value/100.0,
+        lowerAngularVelocity: document.getElementById("lowerAngularVelocity").value/100.0,
+    };
+   
+    const postOptions = {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+    };
+
+    const response = await fetch("/setState", postOptions);
+    if (!response.ok){
+        console.log("ERROR posting state!");
+    }
+
+    draw();
+}
