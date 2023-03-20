@@ -8,30 +8,6 @@ canvas.width = canvasWidth * pixelRatio;
 canvas.height = canvasHeight * pixelRatio;
 context.scale(pixelRatio, pixelRatio);
 
-var isPausedButton = document.getElementById("isPausedButton");
-var animationInterval;
-const PLAY_EMOJI = "▶️";
-const PAUSE_EMOJI = "⏸️";
-var isPaused = true;
-function togglePaused() {
-    isPaused = !isPaused;
-    if (isPaused) {
-        isPausedButton.innerHTML = PLAY_EMOJI;
-        clearInterval(animationInterval)
-    } else {
-        isPausedButton.innerHTML = PAUSE_EMOJI;
-        animationInterval = setInterval(draw, 10);
-    }
-}
-
-async function getNextState() {
-    var response = await(fetch("/nextState"))
-    data = (await response.json())
-    // console.log(data)
-    return data
-}
-
-
 
 async function draw() {
     state = await getNextState();
@@ -43,7 +19,6 @@ async function draw() {
 
     context.save();
     context.translate(canvasWidth / 2, canvasHeight/3);
-    // context.rotate(Math.PI/2);
 
     context.rotate(state.Theta1);
     context.beginPath();
@@ -71,6 +46,7 @@ async function draw() {
 
     context.restore();
 }
+
 function anim() {
     if (isPaused) {
         return
@@ -85,16 +61,3 @@ function nextFrame() {
     }
     draw();
 }
-
-async function randomize() {
-    if (!isPaused) {
-        togglePaused();
-    }
-    await fetch("/random");
-
-    context.fillStyle = "rgba(255,255,255,1)";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    draw();
-}
-
-draw();
