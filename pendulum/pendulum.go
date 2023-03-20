@@ -2,6 +2,7 @@ package pendulum
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"math"
 	"net/http"
@@ -15,7 +16,7 @@ import (
 const (
 	G                 float64 = 9.81
 	TIME_DELTA        float64 = 0.005
-	FRICTION_CONSTANT float64 = 0.2
+	FRICTION_CONSTANT float64 = 0.1
 )
 
 type PendulumState struct {
@@ -91,11 +92,48 @@ func (p *PendulumState) NextState() {
 	p.time = p.time + TIME_DELTA
 }
 
-func (p *PendulumState) SendNextStateJSON(w http.ResponseWriter, req *http.Request) {
-	p.NextState()
+type StateSettingData struct {
+	UpperLength          float64
+	UpperMass            float64
+	UpperAngle           float64
+	UpperAngularVelocity float64
+
+	LowerAngle           float64
+	LowerLength          float64
+	LowerMass            float64
+	LowerAngularVelocity float64
+}
+
+func (p *PendulumState) SetState(w http.ResponseWriter, req *http.Request) {
+	var newState StateSettingData
+	if err := json.NewDecoder(req.Body).Decode(&newState); err != nil {
+		fmt.Printf("ERROR while decoding POST request body! %#v\n", err)
+	}
+	fmt.Printf("New State from Client: %#v\n", newState)
+
+	p.L1 = newState.UpperLength
+	p.M1 = newState.UpperMass
+	p.Theta1 = newState.UpperAngle
+	p.omega1 = newState.UpperAngularVelocity
+
+	p.L2 = newState.LowerLength
+	p.M2 = newState.LowerMass
+	p.Theta2 = newState.LowerAngle
+	p.omega2 = newState.LowerAngularVelocity
+
+	p.time = 0
+}
+
+func (p *PendulumState) GetState(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(p)
 }
+
+func (p *PendulumState) SendNextStateJSON(w http.ResponseWriter, req *http.Request) {
+	p.NextState()
+	p.GetState(w, req)
+}
+
 func (p *PendulumState) Randomize(w http.ResponseWriter, req *http.Request) {
 	randState := NewRandomState()
 	p.L1 = randState.L1
