@@ -8,8 +8,7 @@ import (
 )
 
 func serveWebFrontend(pendulumState *pendulum.PendulumState) {
-	// fs := http.FileServer(http.Dir("./web"))
-	fs := http.FileServer(http.Dir("./DoublePendulum/build"))
+	fs := http.FileServer(http.Dir("./web/build"))
 	http.Handle("/", fs)
 	http.HandleFunc("/getState", pendulumState.GetState)
 	http.HandleFunc("/nextState", pendulumState.SendNextStateJSON)
