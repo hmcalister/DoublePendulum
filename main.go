@@ -8,7 +8,8 @@ import (
 )
 
 func serveWebFrontend(pendulumState *pendulum.PendulumState) {
-	fs := http.FileServer(http.Dir("./web"))
+	// fs := http.FileServer(http.Dir("./web"))
+	fs := http.FileServer(http.Dir("./DoublePendulum/build"))
 	http.Handle("/", fs)
 	http.HandleFunc("/getState", pendulumState.GetState)
 	http.HandleFunc("/nextState", pendulumState.SendNextStateJSON)
@@ -26,7 +27,7 @@ func main() {
 	log.New(os.Stdout, "", log.Ldate|log.Ltime|log.Lshortfile)
 	log.Println("DOUBLE PENDULUM: PROGRAM START")
 	initialState := pendulum.NewRandomState()
-	log.Printf("Initial Pendulum State: %#v\n", initialState)
+	// log.Printf("Initial Pendulum State: %#v\n", initialState)
 
 	serveWebFrontend(initialState)
 }
