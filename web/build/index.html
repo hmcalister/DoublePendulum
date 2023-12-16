@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="./favicon.png" />
+	<link rel="stylesheet" href="./picocss.min.css">
+	<meta name="viewport" content="width=device-width" />
+
+	<meta http-equiv="content-security-policy" content="">
+		<link href="./_app/immutable/assets/_page.edcf7cd1.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.aeb200d2.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.683d2cf0.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.15ecc1b5.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.1da823fd.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.4a4f125e.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/layout.svelte.ca80a482.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/_layout.js.984db11e.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/_layout.da46b06b.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/_page.svelte.6bd23930.js">
+</head>
+
+<body data-sveltekit-preload-data="hover">
+	<main class="container">
+		<div style="display: contents">
+
+
+<h1>Double Pendulum</h1>
+<div class="grid">
+<canvas class="svelte-6yx2j8"></canvas>
+    <div><div class="container" style="margin: 5px 0;"><div class="grid"><button id="isPausedButton">PLAY</button>
+            </div></div>
+
+    <form><div class="container" style="margin: 5px 0;"><h2>Upper Pendulum</h2>
+            <div class="grid"><label for="upperLength">Length
+                    <input type="range" min="0" max="1" step="0.01" id="upperLength" name="upperLength" value="0.5"></label>
+                <label for="upperMass">Mass
+                    <input type="range" min="0.01" max="5" step="0.01" id="upperMass" name="upperMass" value="1"></label></div>
+            <div class="grid"><label for="upperAngle">Angle
+                    <input type="range" min="-3.14" max="3.14" step="0.01" id="upperAngle" name="upperAngle" value="0"></label>
+                <label for="upperAngularVelocity">Angular Velocity
+                    <input type="range" min="-10" max="10" step="0.01" id="upperAngularVelocity" name="upperAngularVelocity" value="0"></label></div></div>
+        <div class="container" style="margin: 5px 0;"><h2>Lower Pendulum</h2>
+            <div class="grid"><label for="lowerLength">Length
+                    <input type="range" min="0" max="1" step="0.01" id="lowerLength" name="lowerLength" value="0.5"></label>
+                <label for="lowerMass">Mass
+                    <input type="range" min="0.01" max="5" step="0.01" id="lowerMass" name="lowerMass" value="1"></label></div>
+            <div class="grid"><label for="lowerAngle">Angle
+                    <input type="range" min="-3.14" max="3.14" step="0.01" id="lowerAngle" name="lowerAngle" value="0"></label>
+                <label for="lowerAngularVelocity">Angular Velocity
+                    <input type="range" min="-10" max="10" step="0.01" id="lowerAngularVelocity" name="lowerAngularVelocity" value="0"></label></div></div></form></div></div>
+
+
+			
+			<script>
+				{
+					__sveltekit_1ohq0hn = {
+						env: {},
+						base: new URL(".", location).pathname.slice(0, -1),
+						element: document.currentScript.parentElement
+					};
+
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.aeb200d2.js"),
+						import("./_app/immutable/entry/app.4a4f125e.js")
+					]).then(([kit, app]) => {
+						kit.start(app, __sveltekit_1ohq0hn.element, {
+							node_ids: [0, 2],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</main>
+</body>
+
+</html>
